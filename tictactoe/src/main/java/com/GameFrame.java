@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 public class GameFrame extends JFrame{
     
     private JButton[] btn = new JButton[9];
@@ -61,9 +63,22 @@ public class GameFrame extends JFrame{
                 Player1_Label.setFont(new Font("Arial" , Font.BOLD,22));
         
         this.add(RightWrap,BorderLayout.EAST);
-        RightWrap.setLayout(new FlowLayout(FlowLayout.CENTER, 20 , 300));
+        RightWrap.setLayout(new FlowLayout(FlowLayout.CENTER, 20 , 225));
         RightWrap.add(Player2_ScoreBoard);
-        
+        Player2_ScoreBoard.setLayout(new BorderLayout());
+            Player2_ScoreBoard.setPreferredSize(new Dimension(150, 200));
+            Player2_ScoreBoard.add(Player2_Score,BorderLayout.CENTER);
+            
+            Player2_Score.setText("0");
+            Player2_Score.setFont(new Font("Arial", Font.BOLD, 70));
+            Player2_Score.setVerticalAlignment(SwingConstants.CENTER);
+            Player2_Score.setHorizontalAlignment(SwingConstants.CENTER);
+        Player2_ScoreBoard.add(Player2_Label, BorderLayout.NORTH);
+            Player2_Label.setText("Player 2");
+            Player2_Label.setBorder(new EmptyBorder(10, 0, 0, 0));
+            Player1_Label.setVerticalAlignment(SwingConstants.TOP);
+            Player2_Label.setHorizontalAlignment(SwingConstants.CENTER);
+            Player2_Label.setFont(new Font("Arial" , Font.BOLD,22));
         
         Player2_ScoreBoard.setPreferredSize(new Dimension(150, 200));
         
@@ -71,16 +86,25 @@ public class GameFrame extends JFrame{
         GamePanel.setLayout(new GridLayout(3,3, 10, 10));
         GamePanel.setPreferredSize(new Dimension(500,500));
         this.add(GamePanel,BorderLayout.CENTER);
+        String[] GameTable = new String[9];
         for (int i = 0; i < 9; i++) {
             final int index = i;
             btn[i] = new JButton();
-            btn[i].addActionListener(e -> System.out.println("button #" + (index +1) +" has been pressed"));
+                btn[i].addActionListener(e -> {
+                    System.out.println("button #" + (index +1) +" has been pressed");
+                    GameTable[index] = "";
+                });
             btn[i].setFocusable(false);
             GamePanel.add(btn[i]);
         }
 
         this.setVisible(true);
 
+    }
+
+    public static void main(String[] args) {
+       FlatLightLaf.setup();
+       new GameFrame();
     }
 
 }
